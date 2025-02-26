@@ -14,4 +14,9 @@ class AppConstants {
   static const String razorPayTestKey = "rzp_test_7Oi2KSlUyLz336";
 
   static const String razorPayLiveKey = "rzp_live_Vr7w9sZio7JcYV";
+
+
+  static const String checkPincodeValidity = "checkPincodeValidity";
+
+  static const String fetchDeliveryLocations = "fetch_delivery_locations";
 }

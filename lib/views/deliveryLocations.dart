@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:cubes_n_slice/constants/appConstants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -28,7 +29,7 @@ class _DeliverylocationsPageState extends State<DeliverylocationsPage> {
 
   Future<List<Map<String, String>>> fetchDeliveryLocations() async {
     const String apiUrl =
-        "https://gspedia.com/projects/cubes/api/fetch_delivery_locations";
+        "${AppConstants.BASE_URL}${AppConstants.fetchDeliveryLocations}";
 
     try {
       final response = await http.post(Uri.parse(apiUrl));
@@ -39,9 +40,9 @@ class _DeliverylocationsPageState extends State<DeliverylocationsPage> {
 
         return data
             .map<Map<String, String>>((location) => {
-          "office": location["office"] ?? "Unknown Office",
-          "pincode": location["pincode"] ?? "Unknown Pincode",
-        })
+                  "office": location["office"] ?? "Unknown Office",
+                  "pincode": location["pincode"] ?? "Unknown Pincode",
+                })
             .toList();
       } else {
         throw Exception("Failed to load locations");
@@ -103,7 +104,8 @@ class _DeliverylocationsPageState extends State<DeliverylocationsPage> {
             itemCount: locations.length,
             itemBuilder: (context, index) {
               final location = locations[index];
-              return _buildLocationCard(location["office"]!, location["pincode"]!);
+              return _buildLocationCard(
+                  location["office"]!, location["pincode"]!);
             },
           );
         },
@@ -116,24 +118,24 @@ class _DeliverylocationsPageState extends State<DeliverylocationsPage> {
     return InkWell(
       onTap: arguments != null
           ? () {
-        // Add the selected pincode to the arguments
-        final updatedArguments = {
-          ...arguments,
-          'postalcode': pincode,
-        };
+              // Add the selected pincode to the arguments
+              final updatedArguments = {
+                ...arguments,
+                'postalcode': pincode,
+              };
 
-        // Navigate to AddAddress page with updated arguments
-        // Get.to(() => AddAddress(), arguments: updatedArguments);
-        // Check if 'pageFrom' is 'cartpage' and pass it explicitly
-        if (arguments['pageFrom'] == 'cartpage') {
-          updatedArguments['pageFrom'] = 'cartpage';
-        }else if (arguments['pageFrom'] == 'addresspage') {
-          updatedArguments['pageFrom'] = 'addresspage';
-        }
+              // Navigate to AddAddress page with updated arguments
+              // Get.to(() => AddAddress(), arguments: updatedArguments);
+              // Check if 'pageFrom' is 'cartpage' and pass it explicitly
+              if (arguments['pageFrom'] == 'cartpage') {
+                updatedArguments['pageFrom'] = 'cartpage';
+              } else if (arguments['pageFrom'] == 'addresspage') {
+                updatedArguments['pageFrom'] = 'addresspage';
+              }
 
-        // Navigate to AddAddress page with updated arguments
-        Get.to(() => AddAddress(), arguments: updatedArguments);
-      }
+              // Navigate to AddAddress page with updated arguments
+              Get.to(() => AddAddress(), arguments: updatedArguments);
+            }
           : null, // Disable onTap if no arguments
       child: Card(
         margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
@@ -158,7 +160,8 @@ class _DeliverylocationsPageState extends State<DeliverylocationsPage> {
             ),
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

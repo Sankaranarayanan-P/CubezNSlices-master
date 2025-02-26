@@ -1,3 +1,4 @@
+import 'package:cubes_n_slice/constants/appConstants.dart';
 import 'package:cubes_n_slice/models/dto/User.dart';
 import 'package:cubes_n_slice/utils/myStates.dart';
 import 'package:cubes_n_slice/views/add_address.dart';
@@ -46,7 +47,7 @@ class _CartScreenState extends State<CartScreen> {
         title: Text(
           "CART 🛒",
           style:
-          GoogleFonts.firaSans(fontSize: 18, fontWeight: FontWeight.bold),
+              GoogleFonts.firaSans(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         leading: Get.currentRoute == "/HomeScreen" ? const SizedBox() : null,
       ),
@@ -74,7 +75,7 @@ class _CartScreenState extends State<CartScreen> {
                     isOverlayVisible = false;
                   }
                   final cartItemList =
-                  cartViewModel.productCartMap.values.toList();
+                      cartViewModel.productCartMap.values.toList();
 
                   if (cartItemList.isEmpty) {
                     // isCartEmpty.value = true;
@@ -165,14 +166,14 @@ class _CartScreenState extends State<CartScreen> {
                 children: [
                   Obx(() => cartViewModel.productCartMap.values.toList().isEmpty
                       ? Padding(
-                    padding: const EdgeInsets.only(bottom: 8),
-                    child: Text("Add items to Enjoy our Seamless orders",
-                        style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                            color: Get.theme.bottomNavigationBarTheme
-                                .backgroundColor)),
-                  )
+                          padding: const EdgeInsets.only(bottom: 8),
+                          child: Text("Add items to Enjoy our Seamless orders",
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                  color: Get.theme.bottomNavigationBarTheme
+                                      .backgroundColor)),
+                        )
                       : const SizedBox()),
                   const SizedBox(height: 8),
                   Row(
@@ -181,38 +182,38 @@ class _CartScreenState extends State<CartScreen> {
                       cartViewModel.baseAmount.value == "₹0"
                           ? const SizedBox()
                           : Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text("Total price (with tax)",
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
-                              )),
-                          const SizedBox(height: 4),
-                          Builder(builder: (context) {
-                            return Obx(() => Text(
-                              cartViewModel.baseAmount.value,
-                              style: const TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.red,
-                                  fontWeight: FontWeight.bold),
-                            ));
-                          }),
-                        ],
-                      ),
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text("Total price (with tax)",
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold,
+                                    )),
+                                const SizedBox(height: 4),
+                                Builder(builder: (context) {
+                                  return Obx(() => Text(
+                                        cartViewModel.baseAmount.value,
+                                        style: const TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.red,
+                                            fontWeight: FontWeight.bold),
+                                      ));
+                                }),
+                              ],
+                            ),
                       const SizedBox(width: 16),
                       Expanded(
                         child: Obx(() {
                           final cartItemList =
-                          cartViewModel.productCartMap.values.toList();
+                              cartViewModel.productCartMap.values.toList();
                           return CustomButton(
                             text: "Checkout",
                             onPressed: cartItemList.isEmpty ||
-                                cartViewModel.outOfStock.value
+                                    cartViewModel.outOfStock.value
                                 ? () {}
                                 : _showCheckoutDialog,
                             backgroundColor: !cartViewModel.outOfStock.value &&
-                                cartItemList.isNotEmpty
+                                    cartItemList.isNotEmpty
                                 ? Get.theme.primaryColor
                                 : Get.theme.disabledColor,
                           );
@@ -220,18 +221,18 @@ class _CartScreenState extends State<CartScreen> {
                             onPressed: cartItemList.isEmpty
                                 ? null
                                 : cartViewModel.outOfStock.value
-                                ? null
-                                : _showCheckoutDialog,
+                                    ? null
+                                    : _showCheckoutDialog,
                             style: TextButton.styleFrom(
                               padding: const EdgeInsets.symmetric(vertical: 16),
                               textStyle: const TextStyle(
                                   fontSize: 14, fontWeight: FontWeight.w500),
                               shape: const StadiumBorder(),
                               backgroundColor:
-                              !cartViewModel.outOfStock.value &&
-                                  cartItemList.isNotEmpty
-                                  ? Get.theme.primaryColor
-                                  : Get.theme.disabledColor,
+                                  !cartViewModel.outOfStock.value &&
+                                          cartItemList.isNotEmpty
+                                      ? Get.theme.primaryColor
+                                      : Get.theme.disabledColor,
                             ),
                             child: const Text(
                               "Checkout",
@@ -261,49 +262,49 @@ class _CartScreenState extends State<CartScreen> {
       // backgroundColor: Colors.white,
       radius: 16.0,
       bodyBuilder: (context) => Obx(() => Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [const Text("Amount"), Text(baseAmount)],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Text("Delivery Charge"),
-                Text(deliveryCharge)
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [const Text("Discount"), Text("- $discountPrice")],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Text("Grand Total"),
-                Text(cartViewModel.grandTotal.value)
-              ],
-            ),
-          ),
-        ],
-      )),
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [const Text("Amount"), Text(baseAmount)],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const Text("Delivery Charge"),
+                    Text(deliveryCharge)
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [const Text("Discount"), Text("- $discountPrice")],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const Text("Grand Total"),
+                    Text(cartViewModel.grandTotal.value)
+                  ],
+                ),
+              ),
+            ],
+          )),
       direction: PopoverDirection.bottom,
       width: 210,
       height: 200,
@@ -328,8 +329,6 @@ class ConfirmAddress extends StatefulWidget {
   State<ConfirmAddress> createState() => _ConfirmAddressState();
 }
 
-
-
 class _ConfirmAddressState extends State<ConfirmAddress> {
   List<Address> addressList = [];
   final ProfileViewModel profileViewModel = Get.find<ProfileViewModel>();
@@ -351,14 +350,15 @@ class _ConfirmAddressState extends State<ConfirmAddress> {
     print("Pin Code: $pinCode");
 
     final dio = Dio();
-    final url = 'https://gspedia.com/projects/cubes/api/checkPincodeValidity/';
 
     try {
       final response = await dio.post(
-        url,
+        "${AppConstants.BASE_URL}${AppConstants.checkPincodeValidity}",
         data: {'pinCode': pinCode}, // Send as form data
         options: Options(
-          headers: {'Content-Type': 'application/x-www-form-urlencoded'}, // Form data header
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          }, // Form data header
         ),
       );
 
@@ -378,8 +378,6 @@ class _ConfirmAddressState extends State<ConfirmAddress> {
             print("INVALID PINCODE!!!!!!!!!!!!!");
             _handlePincodeError(addressData);
           });
-
-
         }
       } else {
         _handlePincodeError(addressData);
@@ -398,11 +396,11 @@ class _ConfirmAddressState extends State<ConfirmAddress> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(''),
+        title: const Text(''),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
+            const Text(
               'Sorry, the selected delivery location is invalid.',
               style: TextStyle(
                 fontSize: 16,
@@ -427,7 +425,7 @@ class _ConfirmAddressState extends State<ConfirmAddress> {
                 //     }
                 // );
 
-                Get.to(() => DeliverylocationsPage(), arguments: {
+                Get.to(() => const DeliverylocationsPage(), arguments: {
                   'pageFrom': 'cartpage',
                   'firstName': addressData.firstName,
                   'lastName': addressData.lastName,
@@ -437,7 +435,7 @@ class _ConfirmAddressState extends State<ConfirmAddress> {
                   'landMark': addressData.landmark,
                 });
               },
-              child: Text(
+              child: const Text(
                 'View Available Delivery Locations',
                 style: TextStyle(
                   color: Colors.blueAccent,
@@ -454,13 +452,12 @@ class _ConfirmAddressState extends State<ConfirmAddress> {
             onPressed: () {
               Navigator.of(context).pop(); // Close the dialog
             },
-            child: Text('OK'),
+            child: const Text('OK'),
           ),
         ],
       ),
     );
   }
-
 
   Future<void> _fetchAddress() async {
     setState(() {
@@ -475,7 +472,8 @@ class _ConfirmAddressState extends State<ConfirmAddress> {
       if (hasShipping) {
         print("%%%%%%%%%%%%%%%%%%%%%%%%");
         print("Address Data:");
-        print(addressdata); // Will print all fields if `toString` is implemented.
+        print(
+            addressdata); // Will print all fields if `toString` is implemented.
 
         // Access individual fields if needed:
         print("Postal Code: ${addressdata.postalCode}");
@@ -557,80 +555,82 @@ class _ConfirmAddressState extends State<ConfirmAddress> {
       ),
       child: isLoading
           ? Container(
-        height: MediaQuery.of(context).size.height * 0.5,
-        alignment: Alignment.center,
-        child: const CircularProgressIndicator(),
-      )
+              height: MediaQuery.of(context).size.height * 0.5,
+              alignment: Alignment.center,
+              child: const CircularProgressIndicator(),
+            )
           : Padding(
-        padding: const EdgeInsets.all(20),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Confirm Address'.capitalize!,
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                // Handling addressList being empty
-                addressList.isEmpty
-                    ? SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.5,
-                  child: Center(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
+              padding: const EdgeInsets.all(20),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Confirm Address'.capitalize!,
+                      style: const TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    // Handling addressList being empty
+                    addressList.isEmpty
+                        ? SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.5,
+                            child: Center(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Lottie.asset(Assets.noAddressJson,
+                                      repeat: false, height: 200),
+                                  const Text(
+                                    "You don't have any addresses saved.\nAdd Address to Continue",
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          )
+                        : ListView.builder(
+                            shrinkWrap:
+                                true, // Important: prevents ListView from taking up infinite space
+                            physics:
+                                const NeverScrollableScrollPhysics(), // Prevents ListView from scrolling independently
+                            itemCount: addressWidgetList.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return addressWidgetList[index];
+                            },
+                          ),
+                    const SizedBox(height: 20),
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Lottie.asset(Assets.noAddressJson, repeat: false, height: 200),
-                        const Text(
-                          "You don't have any addresses saved.\nAdd Address to Continue",
-                          textAlign: TextAlign.center,
+                        const Text("Add new address"),
+                        IconButton(
+                          icon: const Icon(Icons.add, size: 30),
+                          tooltip: 'Add Address',
+                          onPressed: () {
+                            Get.to(() => const AddAddress(fromCart: true));
+                          },
+                          color: Colors.blue,
+                          padding: const EdgeInsets.all(8),
                         ),
                       ],
                     ),
-                  ),
-                )
-                    : ListView.builder(
-                  shrinkWrap: true,  // Important: prevents ListView from taking up infinite space
-                  physics: NeverScrollableScrollPhysics(), // Prevents ListView from scrolling independently
-                  itemCount: addressWidgetList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return addressWidgetList[index];
-                  },
-                ),
-                const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("Add new address"),
-                    IconButton(
-                      icon: const Icon(Icons.add, size: 30),
-                      tooltip: 'Add Address',
-                      onPressed: () {
-                        Get.to(() => const AddAddress(fromCart: true));
-                      },
-                      color: Colors.blue,
-                      padding: EdgeInsets.all(8),
-                    ),
+                    CustomButton(
+                      text: 'Confirm',
+                      onPressed: addressList.isEmpty || !isPinCodeValid
+                          ? null // Disable the button if address list is empty
+                          : () {
+                              Get.back();
+                              Get.toNamed("/orderSummary");
+                            },
+                      isEnabled: !addressList
+                          .isEmpty, // Disable if address list is empty
+                      backgroundColor: Theme.of(context)
+                          .primaryColor, // Optional: set background color
+                    )
                   ],
                 ),
-                CustomButton(
-                  text: 'Confirm',
-                  onPressed: addressList.isEmpty || !isPinCodeValid
-                      ? null  // Disable the button if address list is empty
-                      : () {
-                    Get.back();
-                    Get.toNamed("/orderSummary");
-                  },
-                  isEnabled: !addressList.isEmpty, // Disable if address list is empty
-                  backgroundColor: Theme.of(context).primaryColor, // Optional: set background color
-                )
-
-
-              ],
-            ),
-          )
-
-      ),
+              )),
     );
   }
 
@@ -693,7 +693,7 @@ class _ConfirmAddressState extends State<ConfirmAddress> {
                       children: [
                         Text(name,
                             style:
-                            const TextStyle(fontWeight: FontWeight.bold)),
+                                const TextStyle(fontWeight: FontWeight.bold)),
                         Text(phone),
                         SizedBox(
                             width: MediaQuery.of(context).size.width * 0.8,
@@ -713,9 +713,9 @@ class _ConfirmAddressState extends State<ConfirmAddress> {
   }
 
   void _showAllAddresses(
-      List<Address> alladdresslist,
-      String addressType,
-      ) {
+    List<Address> alladdresslist,
+    String addressType,
+  ) {
     Get.bottomSheet(
       AddressSelectionWidget(
         alladdresslist: alladdresslist,
@@ -733,9 +733,9 @@ class AddressSelectionWidget extends StatefulWidget {
   final VoidCallback onAddressSelected;
   AddressSelectionWidget(
       {super.key,
-        required this.alladdresslist,
-        required this.addressType,
-        required this.onAddressSelected});
+      required this.alladdresslist,
+      required this.addressType,
+      required this.onAddressSelected});
 
   @override
   State<AddressSelectionWidget> createState() => _AddressSelectionWidgetState();
@@ -750,11 +750,11 @@ class _AddressSelectionWidgetState extends State<AddressSelectionWidget>
   void initState() {
     super.initState();
     selectedAddressIndex = widget.alladdresslist.indexWhere((address) =>
-    address.defaultShipping == "1" || address.defaultBilling == "1");
+        address.defaultShipping == "1" || address.defaultBilling == "1");
     addressId = widget.alladdresslist[selectedAddressIndex ?? 0].addressId;
   }
-  bool isPinCodeValid = false;
 
+  bool isPinCodeValid = false;
 
   @override
   Widget build(BuildContext context) {
@@ -826,7 +826,7 @@ class _AddressSelectionWidgetState extends State<AddressSelectionWidget>
                       }
                     },
                     style: ElevatedButton.styleFrom(
-                      // minimumSize: const Size.fromHeight(50),
+                        // minimumSize: const Size.fromHeight(50),
                         backgroundColor: Colors.green,
                         shape: BeveledRectangleBorder(
                           borderRadius: BorderRadius.circular(5),
@@ -893,9 +893,9 @@ class _AddressSelectionWidgetState extends State<AddressSelectionWidget>
             IconButton(
                 onPressed: () async {
                   await Get.to(() => AddAddress(
-                    address: widget.alladdresslist[index],
-                    hasAddress: true,
-                  ));
+                        address: widget.alladdresslist[index],
+                        hasAddress: true,
+                      ));
                   widget.onAddressSelected();
                   Get.back();
                 },
