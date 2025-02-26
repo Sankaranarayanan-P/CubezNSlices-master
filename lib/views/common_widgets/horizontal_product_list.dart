@@ -6,6 +6,17 @@ import 'package:cubes_n_slice/utils/myStates.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+extension StringExtension on String {
+  String toTitleCase() {
+    if (isEmpty) return this;
+    return split(' ')
+        .map((word) => word.isNotEmpty
+            ? '${word[0].toUpperCase()}${word.substring(1).toLowerCase()}'
+            : '')
+        .join(' ');
+  }
+}
+
 class HorizontalProductList extends StatefulWidget {
   final int page;
   final bool hardRefresh;
@@ -13,12 +24,12 @@ class HorizontalProductList extends StatefulWidget {
   final String uniqueId;
 
   const HorizontalProductList({
-    Key? key,
+    super.key,
     required this.page,
     this.hardRefresh = false,
     required this.featureType,
     required this.uniqueId,
-  }) : super(key: key);
+  });
 
   @override
   State<HorizontalProductList> createState() => _HorizontalProductListState();
@@ -107,7 +118,8 @@ class _HorizontalProductListState extends State<HorizontalProductList> {
     return ListView.builder(
       scrollDirection: Axis.horizontal,
       itemCount: productList.length,
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      // padding: const EdgeInsets.symmetric(horizontal: 16),
+
       itemBuilder: (context, index) {
         return Padding(
           padding: const EdgeInsets.only(right: 8),
@@ -166,14 +178,14 @@ class ProductCard extends StatelessWidget {
   final double cardWidth;
 
   const ProductCard({
-    Key? key,
+    super.key,
     required this.product,
     required this.cardWidth,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: () => Get.toNamed('/details', arguments: product),
       child: SizedBox(
         width: cardWidth * 0.3,
@@ -240,7 +252,7 @@ class ProductCard extends StatelessWidget {
               // Details Section - Remaining space
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
@@ -248,55 +260,47 @@ class ProductCard extends StatelessWidget {
                       // Product Name
                       Expanded(
                         child: Text(
-                          product.productName!,
+                          product.productName!.toTitleCase(),
                           style: TextStyle(
                             fontSize: cardWidth * 0.09,
                             fontWeight: FontWeight.bold,
                           ),
                           maxLines: 2,
-                          overflow: TextOverflow.visible,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
+                      const SizedBox(height: 16),
                       // Price and Cart Button
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          // Price Column
-                          Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              if (product.specialPrice != product.price)
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      '${product.price}',
-                                      style: TextStyle(
-                                        fontSize: cardWidth * 0.08,
-                                        color: Colors.grey,
-                                        decoration: TextDecoration.lineThrough,
-                                        height: 0.5, // Adjust this value to lower the striked price
-                                      ),
-                                    ),
-                                    SizedBox(width: cardWidth * 0.09),
-                                    Text(
-                                      '${product.specialPrice}',
-                                      overflow: TextOverflow.clip,
-                                      style: TextStyle(
-                                        fontSize: cardWidth * 0.08,
-                                        color: Theme.of(context).primaryColor,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                      if (product.specialPrice != product.price) ...[
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          spacing: 5,
+                          children: [
+                            Text(
+                              '${product.specialPrice}',
+                              overflow: TextOverflow.clip,
+                              style: TextStyle(
+                                fontSize: cardWidth * 0.08,
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
 
-                            ],
-                          ),
-                        ],
-                      ),
+                            Text(
+                              '${product.price}',
+                              style: TextStyle(
+                                fontSize: cardWidth * 0.08,
+                                color: Colors.grey,
+                                decoration: TextDecoration.lineThrough,
+                                height:
+                                    0.5, // Adjust this value to lower the striked price
+                              ),
+                            ),
+                            // SizedBox(width: cardWidth * 0.09),
+                          ],
+                        ),
+                        const SizedBox(height: 6),
+                      ]
                     ],
                   ),
                 ),
@@ -308,4 +312,3 @@ class ProductCard extends StatelessWidget {
     );
   }
 }
-

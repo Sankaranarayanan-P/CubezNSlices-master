@@ -76,19 +76,16 @@ class _CarouselState extends State<Carousel> {
                   items: filteredBanners.map((item) {
                     return SizedBox(
                       height: MediaQuery.of(context).size.height * 0.4,
-                      child: ClipRRect(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(16)),
-                        child: Stack(
-                          children: <Widget>[
-                            CachedNetworkImage(
-                              fit: BoxFit.cover,
-                              filterQuality: FilterQuality.low,
-                              width: MediaQuery.of(context).size.width - 12,
-                              height: MediaQuery.of(context).size.height * 0.28,
-                              imageUrl: item.imgPath!,
-                            ),
-                          ],
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(16),
+                          child: CachedNetworkImage(
+                            fit: BoxFit.cover,
+                            width: double.infinity,
+                            height: MediaQuery.of(context).size.height * 0.28,
+                            imageUrl: item.imgPath!,
+                          ),
                         ),
                       ),
                     );

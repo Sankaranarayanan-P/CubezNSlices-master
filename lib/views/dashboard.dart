@@ -370,22 +370,18 @@
 // }
 //
 
-import 'dart:io';
-
+import 'package:cubes_n_slice/controllers/app_update_controller.dart';
 import 'package:cubes_n_slice/models/dto/User.dart';
 import 'package:cubes_n_slice/models/dto/categorie.dart';
 import 'package:cubes_n_slice/views/common_widgets/Search.dart';
 import 'package:cubes_n_slice/views/home.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:new_version/new_version.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:whatsapp_unilink/whatsapp_unilink.dart';
 
@@ -395,13 +391,11 @@ import '../domain/productViewModel.dart';
 import '../domain/profileView.dart';
 import '../utils/myStates.dart';
 import 'categories.dart';
-import 'common_widgets/CustomButton.dart';
 import 'common_widgets/appBar.dart';
 import 'common_widgets/carousel.dart';
 import 'common_widgets/categories_view.dart';
 import 'common_widgets/horizontal_product_list.dart';
 import 'common_widgets/see_all_view.dart';
-import 'package:flutter/foundation.dart';
 
 class CategoryGridBuilder extends StatelessWidget {
   const CategoryGridBuilder({
@@ -545,7 +539,8 @@ class _DashboardScreenState extends State<DashboardScreen>
     user = await profileViewModel.getUserProfile();
     await profileViewModel.checkAppVersion();
     await _loadPackageInfo();
-    await _checkForUpdates();
+    // await _checkForUpdates();
+    Get.put(AppUpdateController()).checkAppUpdate();
     context.loaderOverlay.hide();
   }
 
@@ -557,104 +552,103 @@ class _DashboardScreenState extends State<DashboardScreen>
     });
   }
 
-  Future<void> _checkForUpdates() async {
-    // if(kDebugMode) return;
-    final SharedPreferences shared = await SharedPreferences.getInstance();
-    String? appVersion = shared.getString("appVersion");
-    if (userVersion != appVersion) {
-      _showUpdateDialog();
-    }
-  }
+  // Future<void> _checkForUpdates() async {
+  //   // if(kDebugMode) return;
+  //   final SharedPreferences shared = await SharedPreferences.getInstance();
+  //   String? appVersion = shared.getString("appVersion");
+  //   if (userVersion != appVersion) {
+  //     _showUpdateDialog();
+  // }
 
-  void _showUpdateDialog() {
-    showDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: (BuildContext context) {
-        return Dialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0), // Rounded corners
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0), // Add padding around content
-            child: Column(
-              mainAxisSize: MainAxisSize.min, // Wrap content
-              children: [
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.system_update, // Icon for context
-                      size: 40,
-                      color: Colors.blueAccent,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 16), // Add space between icon and title
-                Text(
-                  "Update Available",
-                  style: GoogleFonts.firaSans(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black87,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 10), // Space between title and content
-                Text(
-                  "A new version is available. Update to the latest version for better performance and new features!",
-                  style: GoogleFonts.firaSans(
-                    fontSize: 16,
-                    color: Colors.grey[700],
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 20), // Space before button
-                CustomButton(
-                  onPressed: () async {
-                    if (Platform.isAndroid) {
-                      final appId = Platform.isAndroid
-                          ? _packageInfo.packageName
-                          : _packageInfo.packageName;
-                      try {
-                        launchUrl(
-                          Uri.parse("market://details?id=$appId"),
-                          mode: LaunchMode.externalApplication,
-                        );
-                      } on PlatformException catch (e) {
-                        launchUrl(
-                          Uri.parse(
-                              "https://play.google.com/store/apps/details?id=$appId"),
-                          mode: LaunchMode.externalApplication,
-                        );
-                      } finally {
-                        launchUrl(
-                          Uri.parse(
-                              "https://play.google.com/store/apps/details?id=$appId"),
-                          mode: LaunchMode.externalApplication,
-                        );
-                      }
-                    }
-                  },
-                  text: 'Update Now',
-                  textStyle: GoogleFonts.firaSans(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                  backgroundColor: Colors.blueAccent,
-                  // Customize button style
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 12, horizontal: 30),
-                ),
-                const SizedBox(height: 10), // Space after button
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
+  // void _showUpdateDialog() {
+  //   showDialog(
+  //     barrierDismissible: false,
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return Dialog(
+  //         shape: RoundedRectangleBorder(
+  //           borderRadius: BorderRadius.circular(20.0), // Rounded corners
+  //         ),
+  //         child: Padding(
+  //           padding: const EdgeInsets.all(16.0), // Add padding around content
+  //           child: Column(
+  //             mainAxisSize: MainAxisSize.min, // Wrap content
+  //             children: [
+  //               const Row(
+  //                 mainAxisAlignment: MainAxisAlignment.center,
+  //                 children: [
+  //                   Icon(
+  //                     Icons.system_update, // Icon for context
+  //                     size: 40,
+  //                     color: Colors.blueAccent,
+  //                   ),
+  //                 ],
+  //               ),
+  //               const SizedBox(height: 16), // Add space between icon and title
+  //               Text(
+  //                 "Update Available",
+  //                 style: GoogleFonts.firaSans(
+  //                   fontSize: 22,
+  //                   fontWeight: FontWeight.bold,
+  //                   color: Colors.black87,
+  //                 ),
+  //                 textAlign: TextAlign.center,
+  //               ),
+  //               const SizedBox(height: 10), // Space between title and content
+  //               Text(
+  //                 "A new version is available. Update to the latest version for better performance and new features!",
+  //                 style: GoogleFonts.firaSans(
+  //                   fontSize: 16,
+  //                   color: Colors.grey[700],
+  //                 ),
+  //                 textAlign: TextAlign.center,
+  //               ),
+  //               const SizedBox(height: 20), // Space before button
+  //               CustomButton(
+  //                 onPressed: () async {
+  //                   if (Platform.isAndroid) {
+  //                     final appId = Platform.isAndroid
+  //                         ? _packageInfo.packageName
+  //                         : _packageInfo.packageName;
+  //                     try {
+  //                       launchUrl(
+  //                         Uri.parse("market://details?id=$appId"),
+  //                         mode: LaunchMode.externalApplication,
+  //                       );
+  //                     } on PlatformException catch (e) {
+  //                       launchUrl(
+  //                         Uri.parse(
+  //                             "https://play.google.com/store/apps/details?id=$appId"),
+  //                         mode: LaunchMode.externalApplication,
+  //                       );
+  //                     } finally {
+  //                       launchUrl(
+  //                         Uri.parse(
+  //                             "https://play.google.com/store/apps/details?id=$appId"),
+  //                         mode: LaunchMode.externalApplication,
+  //                       );
+  //                     }
+  //                   }
+  //                 },
+  //                 text: 'Update Now',
+  //                 textStyle: GoogleFonts.firaSans(
+  //                   fontSize: 16,
+  //                   fontWeight: FontWeight.bold,
+  //                   color: Colors.white,
+  //                 ),
+  //                 backgroundColor: Colors.blueAccent,
+  //                 // Customize button style
+  //                 padding:
+  //                     const EdgeInsets.symmetric(vertical: 12, horizontal: 30),
+  //               ),
+  //               const SizedBox(height: 10), // Space after button
+  //             ],
+  //           ),
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
 
   Future<void> _loadRefreshedData() async {
     context.loaderOverlay.show();
@@ -679,20 +673,16 @@ class _DashboardScreenState extends State<DashboardScreen>
           child: Column(
             children: [
               const Padding(
-                  padding: EdgeInsets.all(10), child: SearchOverlay()),
+                padding: EdgeInsets.all(10),
+                child: SearchOverlay(),
+              ),
               _buildBanner("Main"),
-              SizedBox(
-                height: 16,
-              ),
+              const SizedBox(height: 16),
               _buildCategorySection(),
-              SizedBox(
-                height: 16,
-              ),
+              const SizedBox(height: 30),
               _buildProductSection("Top Selling Products", "top_selling"),
               _buildBanner("Ad"),
-              SizedBox(
-                height: 16,
-              ),
+              const SizedBox(height: 30),
               _buildProductSection("Our signature product", "special_products"),
             ],
           ),
@@ -804,7 +794,7 @@ class _DashboardScreenState extends State<DashboardScreen>
 
   Widget _buildProductSection(String featureType, String uniqueId) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
         children: [
           SeeAllView(
@@ -814,23 +804,19 @@ class _DashboardScreenState extends State<DashboardScreen>
                 arguments: {"feature_type": featureType}),
           ),
           const SizedBox(height: 12),
-          LayoutBuilder(
-            builder: (context, constraints) {
-              return SizedBox(
-                height: MediaQuery.of(context).size.width * 0.75,
-                child: Obx(() {
-                  if (productViewModel.productState is LoadingState) {
-                    return const SizedBox();
-                  }
-                  return HorizontalProductList(
-                    page: 1,
-                    hardRefresh: isHardRest,
-                    featureType: featureType,
-                    uniqueId: uniqueId,
-                  );
-                }),
+          SizedBox(
+            height: MediaQuery.of(context).size.width * 0.8,
+            child: Obx(() {
+              if (productViewModel.productState is LoadingState) {
+                return const SizedBox();
+              }
+              return HorizontalProductList(
+                page: 1,
+                hardRefresh: isHardRest,
+                featureType: featureType,
+                uniqueId: uniqueId,
               );
-            },
+            }),
           ),
           const SizedBox(height: 16),
         ],

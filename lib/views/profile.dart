@@ -153,7 +153,6 @@ class _ProfileState extends State<Profile> {
                   const Divider(
                     thickness: 0.1,
                   ),
-                  const SizedBox(height: 10),
                   ProfileMenuWidget(
                       title: "Terms & Conditions",
                       icon: FontAwesomeIcons.clipboardList,
@@ -165,7 +164,7 @@ class _ProfileState extends State<Profile> {
                           "title": "Terms And Condition"
                         });
                       }),
-                  const SizedBox(height: 10),
+
                   ProfileMenuWidget(
                       title: "Privacy Policy",
                       icon: FontAwesomeIcons.shieldHalved,
@@ -205,7 +204,6 @@ class _ProfileState extends State<Profile> {
                       }),
                   ProfileMenuWidget(
                       title: "About us",
-
                       icon: Icons.question_mark_outlined,
                       endIcon: false,
                       onPress: () {

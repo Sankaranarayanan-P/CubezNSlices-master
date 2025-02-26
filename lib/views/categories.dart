@@ -159,67 +159,102 @@ class _CategoriesState extends State<Categories>
                             itemCount: subCategories.length,
                             itemBuilder: (context, index) {
                               final subCategory = subCategories[index];
-                              print("products are ${subCategory.products!}");
-                              return ExpansionTile(
-                                initiallyExpanded: true,
-                                title: Text(subCategory.subcategory_name ?? ''),
-                                children: [
-                                  if (subCategory.products != null &&
-                                      subCategory.products!.isNotEmpty)
-                                    GridView.builder(
-                                      shrinkWrap: true,
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      gridDelegate:
-                                          const SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 2,
-                                        crossAxisSpacing: 20,
-                                        mainAxisSpacing: 20,
-                                      ),
-                                      itemCount: subCategory.products!.length,
-                                      itemBuilder: (context, index) {
-                                        final Product product =
-                                            subCategory.products![index];
-                                        print(product.imageUrl);
-                                        return GestureDetector(
-                                          onTap: () => Get.toNamed('/details',
-                                              arguments: product),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: GridTile(
-                                              footer: GridTileBar(
-                                                backgroundColor: Colors.black54,
-                                                title: Text(
-                                                  product.productName ?? '',
-                                                  style: GoogleFonts.firaSans(),
+
+                              return Theme(
+                                data: Theme.of(context)
+                                    .copyWith(dividerColor: Colors.transparent),
+                                child: ExpansionTile(
+                                  initiallyExpanded: true,
+                                  title:
+                                      Text(subCategory.subcategory_name ?? ''),
+                                  children: [
+                                    if (subCategory.products == null ||
+                                        subCategory.products!.isEmpty)
+                                      Container(
+                                        margin: const EdgeInsets.all(16),
+                                        width: double.infinity,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              'No products are available for this category',
+                                              textAlign: TextAlign.center,
+                                              style: GoogleFonts.firaSans(),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    else
+                                      GridView.builder(
+                                        shrinkWrap: true,
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        gridDelegate:
+                                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 2,
+                                          crossAxisSpacing: 20,
+                                          mainAxisSpacing: 20,
+                                        ),
+                                        itemCount: subCategory.products!.length,
+                                        itemBuilder: (context, index) {
+                                          final Product product =
+                                              subCategory.products![index];
+
+                                          return GestureDetector(
+                                            onTap: () => Get.toNamed('/details',
+                                                arguments: product),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: GridTile(
+                                                footer: GridTileBar(
+                                                  backgroundColor:
+                                                      Colors.black54,
+                                                  title: Text(
+                                                    product.productName ?? '',
+                                                    style:
+                                                        GoogleFonts.firaSans(),
+                                                  ),
+                                                ),
+                                                child: CachedNetworkImage(
+                                                  imageUrl:
+                                                      product.imageUrl ?? '',
+                                                  fit: BoxFit.contain,
+                                                  errorWidget: (context, url,
+                                                          error) =>
+                                                      const Icon(Icons.error),
+                                                  placeholder: (context, url) =>
+                                                      const CircularProgressIndicator(),
                                                 ),
                                               ),
-                                              child: CachedNetworkImage(
-                                                imageUrl:
-                                                    product.imageUrl ?? '',
-                                                fit: BoxFit.contain,
-                                                errorWidget:
-                                                    (context, url, error) =>
-                                                        const Icon(Icons.error),
-                                                placeholder: (context, url) =>
-                                                    const CircularProgressIndicator(),
-                                              ),
                                             ),
-                                          ),
-                                        );
-                                      },
-                                    )
-                                  else
-                                    const Center(
-                                      child: Text(
-                                          'No products available for this subcategory'),
-                                    ),
-                                ],
+                                          );
+                                        },
+                                      )
+                                  ],
+                                ),
                               );
                             },
                           );
                         } else {
-                          return const Center(child: Text('Not Available'));
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              const SizedBox(height: 60),
+                              Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Text(
+                                  'No subcategories available for this category',
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.firaSans(),
+                                ),
+                              ),
+                            ],
+                          );
                         }
                       } else {
                         return const Center(

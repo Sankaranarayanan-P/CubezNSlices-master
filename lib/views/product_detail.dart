@@ -148,7 +148,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 height:
                                     MediaQuery.of(context).size.height * 0.3,
 
-                                fit: BoxFit.fitWidth,
+                                fit: BoxFit.cover,
                                 filterQuality: FilterQuality.high,
                                 errorWidget: (context, url, error) =>
                                     Image.asset(Assets.noImage),

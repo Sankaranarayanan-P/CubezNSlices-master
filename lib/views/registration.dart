@@ -109,7 +109,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   void dispose() {
     // TODO: implement dispose
-    context.loaderOverlay.hide();
+    // context.loaderOverlay.hide();
     super.dispose();
   }
 
