@@ -47,7 +47,9 @@ class _PaymentSuccessFailureState extends State<PaymentSuccessFailure> {
               child: Text(
                 widget.isSuccess
                     ? "Your Order was Successful.We will deliver your orders at the earliest."
-                    : widget.failedReason,
+                    : widget.failedReason != 'undefined'
+                        ? widget.failedReason
+                        : "Something went wrong or user cancelled the payment",
                 textAlign: TextAlign.center,
               ),
             ),

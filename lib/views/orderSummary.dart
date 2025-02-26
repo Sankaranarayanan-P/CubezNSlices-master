@@ -345,7 +345,8 @@ class _orderSummaryState extends State<orderSummary>
                                         innerColor: Colors.white,
                                         outerColor: sliderbackgroundColor,
                                         sliderButtonIconPadding: 20,
-                                        text: _selectedPaymentMethod == "CASH_ON_DELIVERY"
+                                        text: _selectedPaymentMethod ==
+                                                "CASH_ON_DELIVERY"
                                             ? "               Slide to Place Order | ₹${grandTotal.round()}"
                                             : "        Slide to Pay | ₹${grandTotal.round()}",
                                         textStyle: GoogleFonts.firaSans(
@@ -626,7 +627,6 @@ class _orderSummaryState extends State<orderSummary>
             children: [
               Text(
                 label,
-
                 style: TextStyle(
                     fontSize: labelFontSize, fontWeight: labelFontWeight),
               ),
