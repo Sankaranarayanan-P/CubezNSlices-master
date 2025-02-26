@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "913787822945",
+    "project_id": "cubes-n-slices",
+    "storage_bucket": "cubes-n-slices.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:913787822945:android:f66d95083f0e913989db20",
+        "android_client_info": {
+          "package_name": "com.suffix.cubezNslice.cubez_n_slice"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsVQZjbV1kyiTzzqV8lC8VJjGsqjCo-KA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
