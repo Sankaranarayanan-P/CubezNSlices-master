@@ -1,6 +1,7 @@
 class AppConstants {
   // static const String siteUrl = "https://gspedia.com/projects/cubesNslice/"; // testing
   static const String siteUrl = "https://cubeznslices.com/cubes/"; // production
+  static const String wordPressSiteUrl = "https://cubeznslices.com/"; // production
   // static const String siteUrl = "https://gspedia.com/projects/cubes/";
 
   static const String BASE_URL = "${siteUrl}api/";

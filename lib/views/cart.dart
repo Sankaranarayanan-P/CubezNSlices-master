@@ -751,7 +751,9 @@ class _AddressSelectionWidgetState extends State<AddressSelectionWidget>
     super.initState();
     selectedAddressIndex = widget.alladdresslist.indexWhere((address) =>
         address.defaultShipping == "1" || address.defaultBilling == "1");
-    addressId = widget.alladdresslist[selectedAddressIndex ?? 0].addressId;
+    if (widget.alladdresslist.isNotEmpty && selectedAddressIndex !=-1) {
+      addressId = widget.alladdresslist[selectedAddressIndex ?? 0].addressId;
+    }
   }
 
   bool isPinCodeValid = false;

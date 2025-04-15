@@ -752,6 +752,8 @@ class _AddAddressState extends State<AddAddress> {
                             if (response) {
                               context.loaderOverlay.hide();
 
+                              profileViewModel.getAllAddress();
+
                               showNotificationSnackBar("Successfully Updated",
                                   NotificationStatus.success);
                               // Get.back();
@@ -801,6 +803,8 @@ class _AddAddressState extends State<AddAddress> {
                               } else {
                                 Get.back();
                               }
+
+                              profileViewModel.getAllAddress();
                             } else {
                               context.loaderOverlay.hide();
                               showNotificationSnackBar("Something went wrong",

@@ -21,7 +21,13 @@ class AddressPage extends StatefulWidget {
 }
 
 class _AddressPageState extends State<AddressPage> {
-  final ProfileViewModel profileViewModel = Get.find<ProfileViewModel>();
+  final profileViewModel = Get.find<ProfileViewModel>();
+
+  @override
+  void initState() {
+    super.initState();
+    profileViewModel.getAllAddress();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,30 +47,19 @@ class _AddressPageState extends State<AddressPage> {
 
             widget.fromCart == false
                 ? Get.off(() => HomeScreen(
-              initialIndex: 4,
-            ))
-                : Get.off(() => HomeScreen(
-              initialIndex: 4,
-            ));
+                      initialIndex: 4,
+                    ))
+                : Get.off(() => HomeScreen(initialIndex: 4));
           },
         ),
       ),
-      body: FutureBuilder<List<Address>>(
-        future: profileViewModel.getAllAddress(),
-        builder: (BuildContext context, AsyncSnapshot<List<Address>> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          } else if (snapshot.hasError) {
-            return const Center(child: Text("Something went wrong"));
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return _buildNoAddressView();
-          } else {
-            return _buildAddressList(snapshot.data!);
-          }
-        },
-      ),
+      body: Obx(() {
+        if (profileViewModel.addresses.isEmpty) {
+          return _buildNoAddressView();
+        } else {
+          return _buildAddressList(profileViewModel.addresses);
+        }
+      }),
     );
   }
 
@@ -173,12 +168,10 @@ class _AddressPageState extends State<AddressPage> {
                         'emailAddress': address.email,
                         'streetAddress': address.streetAddress,
                         'landMark': address.landmark,
-                        'city':address.city,
-                        'country':address.country,
-                        'postalcode':address.postalCode
-
+                        'city': address.city,
+                        'country': address.country,
+                        'postalcode': address.postalCode
                       });
-
                     },
                   ),
                 ),

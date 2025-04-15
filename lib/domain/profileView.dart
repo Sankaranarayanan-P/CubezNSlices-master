@@ -18,6 +18,8 @@ class ProfileViewModel extends GetxController {
 
   MyState get userState => _userState.value;
 
+  RxList<Address> addresses = <Address>[].obs;
+
   RxString firstName = ''.obs;
   RxString middleName = ''.obs;
   RxString lastName = ''.obs;
@@ -131,7 +133,14 @@ class ProfileViewModel extends GetxController {
   }
 
   Future<List<Address>> getAllAddress() async {
-    return await _userRepository.getAllAddress();
+    try {
+      List<Address> result = await _userRepository.getAllAddress();
+      addresses.value = result;
+      return result;
+    } catch (e) {
+      print("Error getting addresses: $e");
+      return [];
+    }
   }
 
   Future<bool> updateAddressShipping({required String addressId}) async {
@@ -161,6 +170,7 @@ class ProfileViewModel extends GetxController {
   @override
   void onInit() async {
     await getUserProfile();
+    await getAllAddress();
     super.onInit();
   }
 
